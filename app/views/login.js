@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View , Dimensions, ImageBackground} from 'react-native';
+import { StyleSheet, Text, View , Dimensions, ImageBackground, KeyboardAvoidingView} from 'react-native';
 import Logo from '../components/logo'; 
 import constants from './../constants';
 import PrimaryButton from '../components/buttons/primary-button';
@@ -19,10 +19,15 @@ class LandingScreen extends React.Component{
     const {navigate} = this.props.navigation;
     return (
       <ImageBackground 
-        source={background} 
+        source={background}  
         style={styles.landing} 
         blurRadius={0.2} 
         resizeMode="stretch"> 
+      
+      <KeyboardAvoidingView
+        behaviour="padding"
+        style={styles.loginContainer}
+      >
 
         <Logo 
           color={'#FFFFFF'} 
@@ -32,8 +37,13 @@ class LandingScreen extends React.Component{
 
         <View style={styles.loginContent}>
           <GeneralInput placeholder="Enter your code" textAlign={'center'} />
-          <PrimaryButton onPress={ ()=> { alert("A") } } title="LOGIN" />
+          <View style={styles.loginButton}>
+            <PrimaryButton onPress={() => navigate('Home')} title="LOGIN" />
+          </View>
         </View>
+
+      </KeyboardAvoidingView>
+
       </ImageBackground>
     );
   }
@@ -43,11 +53,15 @@ class LandingScreen extends React.Component{
 const styles = StyleSheet.create({
   landing:{
     flex: 1,
+    // alignItems: 'center',
+    // justifyContent: 'space-evenly',
+    backgroundColor: constants.PRIMARY_COLOR,
+    // opacity: 0.5
+  },
+  loginContainer:{
+    flex:1,
     alignItems: 'center',
     justifyContent: 'space-evenly',
-    backgroundColor: constants.PRIMARY_COLOR,
-  },
-  landingBackground: {
     width,
     height,
   },
@@ -57,6 +71,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '90%',
     // backgroundColor: 'red'
+  },
+  loginButton:{
+    width: '100%',
+    marginTop: 30,
   }
 });
 

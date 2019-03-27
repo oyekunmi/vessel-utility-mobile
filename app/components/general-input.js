@@ -7,14 +7,13 @@ const GeneralInput = (props) => {
      width: '100%',
     //  height: 60,
      color: '#FFFFFF',
-     borderColor: '#ECECEC',
-    //  borderWidth: 1,
+     borderColor: '#DEDBDB',
      borderBottomWidth: 1,
      marginBottom: 15,
      textAlign: props.textAlign,
      fontSize: 18,
-    //  borderOpacity: .5
-
+     paddingTop: 15,
+     paddingBottom: 15,
     }
   });
 
@@ -22,11 +21,11 @@ const GeneralInput = (props) => {
     <TextInput
         style={styles.input}
         onChangeText={(text) => {}}
-        // value={}
+        clearButtonMode="always"
         placeholder={props.placeholder}
+        placeholderTextColor={'#DEDBDB'}
         
     />
   );
 };
-
 export default GeneralInput;
