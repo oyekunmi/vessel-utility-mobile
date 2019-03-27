@@ -18,62 +18,64 @@ class LandingScreen extends React.Component{
   render(){
     const {navigate} = this.props.navigation;
     return (
-      <ImageBackground 
-        source={background}  
-        style={styles.landing} 
-        blurRadius={0.2} 
-        resizeMode="stretch"> 
       
       <KeyboardAvoidingView
         behaviour="padding"
-        style={styles.loginContainer}
+        style={styles.container}
       >
+        <ImageBackground 
+          source={background}  
+          style={styles.backgroundContainer} 
+          // blurRadius={0.2} 
+          // resizeMode="stretch"
+          imageStyle={styles.backgroundImage}
+          > 
+        
 
-        <Logo 
-          color={'#FFFFFF'} 
-          size={constants.LANDING_LOGO_SIZE} 
-          label={constants.APP_NAME} 
-          labelSize={constants.LANDING_LOGO_LABEL_SIZE}  />
+          <Logo 
+            color={'#FFFFFF'} 
+            size={constants.LANDING_LOGO_SIZE} 
+            label={constants.APP_NAME} 
+            labelSize={constants.LANDING_LOGO_LABEL_SIZE}  />
 
-        <View style={styles.loginContent}>
-          <GeneralInput placeholder="Enter your code" textAlign={'center'} />
-          <View style={styles.loginButton}>
-            <PrimaryButton onPress={() => navigate('Home')} title="LOGIN" />
+          <View style={styles.loginContent}>
+            <GeneralInput placeholder="Enter your code" textAlign={'center'} />
+            <View style={styles.loginButton}>
+              <PrimaryButton onPress={() => navigate('Home')} title="LOGIN" />
+            </View>
           </View>
-        </View>
+
+
+        </ImageBackground> 
 
       </KeyboardAvoidingView>
-
-      </ImageBackground>
     );
   }
 
 } 
 
 const styles = StyleSheet.create({
-  landing:{
+  container:{
     flex: 1,
-    // alignItems: 'center',
-    // justifyContent: 'space-evenly',
-    backgroundColor: constants.PRIMARY_COLOR,
-    // opacity: 0.5
   },
-  loginContainer:{
+  backgroundContainer:{
     flex:1,
-    alignItems: 'center',
-    justifyContent: 'space-evenly',
-    width,
-    height,
+    justifyContent: 'center',
+    paddingHorizontal: 20,
+  },
+  backgroundImage:{
+    flex: 1,
+    width: null,
+    height: null,
+    resizeMode: 'cover',
+    backgroundColor: 'rgba(70, 132, 254, .8)',
   },
   loginContent:{
     flex: 0.5,
     justifyContent: 'center',
-    alignItems: 'center',
-    width: '90%',
     // backgroundColor: 'red'
   },
   loginButton:{
-    width: '100%',
     marginTop: 30,
   }
 });
