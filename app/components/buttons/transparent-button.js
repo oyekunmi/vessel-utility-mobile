@@ -13,6 +13,8 @@ const TransparentButton = (props) => {
       color="#FFFFFF"
       borderWidth={1}
       borderColor="#FFFFFF"
+      disabled={props.disabled}
+
     />
   );
 }

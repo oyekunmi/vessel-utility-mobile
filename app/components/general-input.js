@@ -1,31 +1,59 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {StyleSheet, TextInput} from 'react-native';
 
-const GeneralInput = (props) => {
-  const styles = StyleSheet.create({
-    input: {
-     width: '100%',
-    //  height: 60,
-     color: '#FFFFFF',
-     borderColor: '#DEDBDB',
-     borderBottomWidth: 1,
-     marginBottom: 15,
-     textAlign: props.textAlign,
-     fontSize: 18,
-     paddingTop: 15,
-     paddingBottom: 15,
-    }
-  });
+class GeneralInput extends Component {
 
-  return(
-    <TextInput
-        style={styles.input}
-        onChangeText={(text) => {}}
-        clearButtonMode="always"
-        placeholder={props.placeholder}
-        placeholderTextColor={'#DEDBDB'}
-        
-    />
-  );
-};
+  constructor(props){
+    super(props);
+    this.state = {
+      text: ''
+    };
+  }
+  
+  handleTextChanged = (text) => {
+    this.setState({ text });
+  }
+
+  handleSubmit = () => {
+    const { text } = this.state;
+
+    if(!text) return;
+
+    this.props.onSubmit(text);
+  }
+
+  render(){
+
+    const styles = StyleSheet.create({
+      input: {
+       width: '100%',
+       color: '#FFFFFF',
+       borderColor: '#DEDBDB',
+       borderBottomWidth: 1,
+       marginBottom: 15,
+       textAlign: this.props.textAlign ,
+       fontSize: 18,
+       paddingTop: 15,
+       paddingBottom: 15,
+      }
+    });
+
+    return(
+      <TextInput
+          style={[styles.input, this.props.style]}
+          onChangeText={this.handleTextChanged}
+          clearButtonMode="always"
+          placeholder={this.props.placeholder}
+          placeholderTextColor={'#DEDBDB'}
+          underlineColorAndroid="transparent"
+          onSubmitEditing={this.handleSubmit}
+      />
+    );
+  }
+
+
+}
+
+
+
 export default GeneralInput;

@@ -21,7 +21,6 @@ const AppStack = createBottomTabNavigator(
 const MainNavigator = createSwitchNavigator(
   { 
       Landing: LandingStack,
-      Home: HomeScreen,
       App: AppStack
   },
   {
@@ -33,11 +32,3 @@ const MainNavigator = createSwitchNavigator(
 const App = createAppContainer(MainNavigator);
 export default App;
 
-
-// export default class App extends React.Component {
-//   render() {
-//     return (
-//       <Landing />
-//     );
-//   }
-// } 

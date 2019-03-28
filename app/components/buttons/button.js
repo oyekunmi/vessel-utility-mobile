@@ -6,7 +6,8 @@ import {
   TouchableNativeFeedback, 
   TouchableOpacity, 
   StyleSheet,
-  Text
+  Text,
+  ActivityIndicator
 } from 'react-native';
 
 const Button = (props) => {
@@ -38,12 +39,24 @@ const Button = (props) => {
     <Touchable
       onPress = {props.onPress}
       background = {Touchable.Ripple('#000000')}
+      disabled={props.disabled}
     >
-
       <View style={styles.button}>
-        <Text style={styles.text}>{props.title}</Text>
-      </View>
 
+        {!props.loading && (
+          <Text 
+           style={styles.text}
+           disabled={props.disabled}>
+             {props.title}
+          </Text>
+        )}
+       {props.loading && (
+          <ActivityIndicator size="large" color="#0000ff" />
+        )}
+       
+
+
+      </View>
     </Touchable>
 
   )

@@ -11,6 +11,7 @@ const WhiteButton = (props) => {
       title={props.title}
       backColor="#FFFFFF"
       color={constants.PRIMARY_COLOR}
+      disabled={props.disabled}
     />
   );
 }

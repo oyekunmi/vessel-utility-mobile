@@ -1,37 +1,89 @@
 import React from 'react';
-import { StyleSheet, Text, View , Dimensions, ImageBackground, KeyboardAvoidingView} from 'react-native';
+import { 
+  StyleSheet, View, ImageBackground, KeyboardAvoidingView,
+  StatusBar, 
+} from 'react-native';
 import Logo from '../components/logo'; 
 import constants from './../constants';
 import PrimaryButton from '../components/buttons/primary-button';
 import GeneralInput from '../components/general-input';
 
 const background = require("../../assets/login-bg.png");
-const { width, height } = Dimensions.get("window");
 
 // const Landing = (props) => {
-class LandingScreen extends React.Component{
+class LoginScreen extends React.Component{
 
   static navigationOptions = {
-    title: 'Login',
+    title: 'Login'
   };
+
+  constructor(props){
+    super(props);
+    this.state={
+      code: '',
+      loading: false,
+      error: false,
+      user: null
+    };
+  }
+
+  findUser = (code) => {
+    return new Promise(resolve => {
+      setTimeout(function() {
+        resolve({ code: code, name: "Captain"});
+      }, 5000);
+    });
+  }
+
+  onCodeUpdated = code => {
+    if(!code) return;
+    try{
+      this.setState({loading: true}, async() => {
+        const user = await this.findUser(code);
+        console.log(user)
+
+        this.setState({
+          loading: false,
+          error: false,
+          user: user
+        });
+
+      });
+    }catch(e){
+      this.setState({
+        loading: false,
+        error: true,
+        user: null
+      });
+        
+    }
+   
+    
+    // console.log(code);
+  }
+
+  performLogin = code => {
+
+  }
 
   render(){
     const {navigate} = this.props.navigation;
+    const {loading, error} = this.state;
+    console.log(loading);
     return (
       
       <KeyboardAvoidingView
         behaviour="padding"
         style={styles.container}
       >
+        
+        <StatusBar barStyle="light-content" />
         <ImageBackground 
           source={background}  
           style={styles.backgroundContainer} 
           // blurRadius={0.2} 
-          // resizeMode="stretch"
           imageStyle={styles.backgroundImage}
-          > 
-        
-
+          >
           <Logo 
             color={'#FFFFFF'} 
             size={constants.LANDING_LOGO_SIZE} 
@@ -39,9 +91,9 @@ class LandingScreen extends React.Component{
             labelSize={constants.LANDING_LOGO_LABEL_SIZE}  />
 
           <View style={styles.loginContent}>
-            <GeneralInput placeholder="Enter your code" textAlign={'center'} />
+            <GeneralInput placeholder="Enter your code" textAlign={'center'} onSubmit={this.onCodeUpdated} />
             <View style={styles.loginButton}>
-              <PrimaryButton onPress={() => navigate('Home')} title="LOGIN" />
+              <PrimaryButton onPress={() => navigate('Home')} title="LOGIN" disabled={loading} loading={loading} />
             </View>
           </View>
 
@@ -80,4 +132,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default LandingScreen;
+export default LoginScreen;

@@ -8,9 +8,11 @@ const PrimaryButton = (props) => {
   return (
     <Button
       onPress={props.onPress}
-      title={props.title}
+      title={props.title ? props.title: props.children}
       backColor={constants.PRIMARY_COLOR}
       color={"#FFFFFF"}
+      disabled={props.disabled}
+      loading={props.loading}
     />
   );
 }
