@@ -12,14 +12,12 @@ class GeneralInput extends Component {
   
   handleTextChanged = (text) => {
     this.setState({ text });
+    this.props.onTextChanged(text);
   }
 
   handleSubmit = () => {
     const { text } = this.state;
-
-    if(!text) return;
-
-    this.props.onSubmit(text);
+    this.props.onSubmitEditing(text);
   }
 
   render(){

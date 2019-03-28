@@ -37,6 +37,13 @@ class LoginScreen extends React.Component{
 
   onCodeUpdated = code => {
     if(!code) return;
+    this.setState({code: code});
+  }
+
+  handleLogin = () => {
+    const {code} = this.state;
+    if(!code) return;
+
     try{
       this.setState({loading: true}, async() => {
         const user = await this.findUser(code);
@@ -48,6 +55,8 @@ class LoginScreen extends React.Component{
           user: user
         });
 
+        this.props.navigation.navigate('Home');
+
       });
     }catch(e){
       this.setState({
@@ -58,18 +67,10 @@ class LoginScreen extends React.Component{
         
     }
    
-    
-    // console.log(code);
-  }
-
-  performLogin = code => {
-
   }
 
   render(){
-    const {navigate} = this.props.navigation;
     const {loading, error} = this.state;
-    console.log(loading);
     return (
       
       <KeyboardAvoidingView
@@ -91,15 +92,19 @@ class LoginScreen extends React.Component{
             labelSize={constants.LANDING_LOGO_LABEL_SIZE}  />
 
           <View style={styles.loginContent}>
-            <GeneralInput placeholder="Enter your code" textAlign={'center'} onSubmit={this.onCodeUpdated} />
+            <GeneralInput 
+              placeholder="Enter your code" 
+              textAlign={'center'} 
+              onSubmitEditing={this.onCodeUpdated} 
+              onTextChanged={this.onCodeUpdated}
+              />
             <View style={styles.loginButton}>
-              <PrimaryButton onPress={() => navigate('Home')} title="LOGIN" disabled={loading} loading={loading} />
+              <PrimaryButton onPress={this.handleLogin} title="LOGIN" disabled={loading} loading={loading} />
             </View>
           </View>
 
-
         </ImageBackground> 
-
+ 
       </KeyboardAvoidingView>
     );
   }

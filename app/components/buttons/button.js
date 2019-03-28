@@ -12,6 +12,7 @@ import {
 
 const Button = (props) => {
   const Touchable = Platform.OS === 'android' ? TouchableNativeFeedback : TouchableOpacity;
+  const {disabled} = props;
 
   const styles = StyleSheet.create({
     text: {
@@ -19,6 +20,9 @@ const Button = (props) => {
       fontSize: props.fontSize ?  props.fontSize : 15,
       color: props.color,
       fontWeight: 'bold'
+    },
+    textDisabled: {
+      color: '#a1a1a1',
     },
     button: {
       alignItems: "center",
@@ -31,31 +35,48 @@ const Button = (props) => {
       borderWidth: props.borderWidth ? props.borderWidth: 0,
       borderColor: props.borderColor ? props.borderColor: 'transparent'
     },
+    buttonDisabled: {
+      elevation: 0,
+      backgroundColor: '#dfdfdf',
+    },
 
   });
+
+  let buttonStyles = [styles.button];
+  let textStyles = [styles.text];
+  let accessibilityStates = [];
+
+  if (disabled) {
+    buttonStyles.push(styles.buttonDisabled);
+    textStyles.push(styles.textDisabled);
+    accessibilityStates.push('disabled');
+  }
+
+  const formattedTitle = props.title.toUpperCase();
   
   return (
     
     <Touchable
+      accessibilityStates={accessibilityStates}
+      accessibilityRole='button'
       onPress = {props.onPress}
       background = {Touchable.Ripple('#000000')}
-      disabled={props.disabled}
+      disabled={disabled}
+      style={buttonStyles} 
     >
       <View style={styles.button}>
 
         {!props.loading && (
           <Text 
-           style={styles.text}
-           disabled={props.disabled}>
-             {props.title}
+           style={textStyles}
+           disabled={disabled}>
+             {formattedTitle}
           </Text>
         )}
        {props.loading && (
           <ActivityIndicator size="large" color="#0000ff" />
         )}
        
-
-
       </View>
     </Touchable>
 
