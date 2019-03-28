@@ -1,12 +1,14 @@
 import React from 'react';
 import { 
   StyleSheet, View, ImageBackground, KeyboardAvoidingView,
-  StatusBar, 
+  StatusBar, Text, Alert
 } from 'react-native';
+
 import Logo from '../components/logo'; 
 import constants from './../constants';
 import PrimaryButton from '../components/buttons/primary-button';
-import GeneralInput from '../components/general-input';
+import GeneralInput from '../components/general-input'; 
+import auth from './../api/auth';
 
 const background = require("../../assets/login-bg.png");
 
@@ -23,16 +25,8 @@ class LoginScreen extends React.Component{
       code: '',
       loading: false,
       error: false,
-      user: null
+      user: null 
     };
-  }
-
-  findUser = (code) => {
-    return new Promise(resolve => {
-      setTimeout(function() {
-        resolve({ code: code, name: "Captain"});
-      }, 5000);
-    });
   }
 
   onCodeUpdated = code => {
@@ -46,17 +40,22 @@ class LoginScreen extends React.Component{
 
     try{
       this.setState({loading: true}, async() => {
-        const user = await this.findUser(code);
-        console.log(user)
-
-        this.setState({
-          loading: false,
-          error: false,
-          user: user
-        });
-
-        this.props.navigation.navigate('Home');
-
+        const user = await auth.authenticate(code);
+        if(!user){
+          this.setState({
+            loading: false,
+            error: true,
+            user: null
+          });
+          Alert.alert("Bad credential", "Invalid login credential, kindly contact support for help on info@app.com", [{text: 'OK'}]);
+        }else{
+          this.setState({
+            loading: false,
+            error: false,
+            user: user
+          });
+          this.props.navigation.navigate('Home');
+        }
       });
     }catch(e){
       this.setState({
@@ -64,7 +63,7 @@ class LoginScreen extends React.Component{
         error: true,
         user: null
       });
-        
+      Alert.alert("Bad credential", "Invalid login credential, kindly contact support for help on info@app.com", [{text: 'OK'}]);
     }
    
   }
@@ -92,6 +91,13 @@ class LoginScreen extends React.Component{
             labelSize={constants.LANDING_LOGO_LABEL_SIZE}  />
 
           <View style={styles.loginContent}>
+            {/* {error && 
+            (
+              <Text>
+                Error occured while trying to authenticate
+              </Text>
+            )
+            } */}
             <GeneralInput 
               placeholder="Enter your code" 
               textAlign={'center'} 
