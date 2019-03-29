@@ -1,6 +1,7 @@
 import * as firebase from 'firebase';
 import 'firebase/firestore'
 import { YellowBox } from 'react-native';
+import localstore from "./localstore";
 
 var config = {
   apiKey: "AIzaSyDGlVhqnTboGrPG-69JBRyMLzV9eDLntEE",
@@ -15,14 +16,28 @@ if (!firebase.apps.length) {
   YellowBox.ignoreWarnings(['Setting a timer']);
 }
 
-
 let auth = {
   authenticate(code) {
     return firebase.firestore().collection('users').doc(code).get().then(function(doc) {
-      return doc.data();
+      const data = doc.data();
+      if(data){
+        localstore.save('user', data);
+        localstore.save('first', true);
+      }
+      return data;
     }).catch(function(error) {
       console.log("Error getting document:", error);
       return false;
+    });
+  },
+  check(){ 
+    return localstore.get('user').then((x)=>{
+      return !!x;
+    }); 
+  },
+  first(){
+    return localstore.get('first').then((x)=>{
+      return !!x;
     });
   }
 };

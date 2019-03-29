@@ -27,7 +27,7 @@ const MainNavigator = createSwitchNavigator(
     // mode: 'modal',
     // headerMode: 'none',
   }
-);
+); 
 
 const App = createAppContainer(MainNavigator);
 export default App;
