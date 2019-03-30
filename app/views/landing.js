@@ -23,7 +23,7 @@ class LandingScreen extends React.Component{
   async componentDidMount(){
     let firstTime = await auth.first();
     let authenticated = await auth.check();
-
+    
     if(firstTime) this.setState({show:true});
     else if(authenticated) this.props.navigation.navigate('Home');
     else this.props.navigation.navigate('Login');
@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
     width: '70%'
   },
   loading:{
-    flex: 1,
+    flex: 1, 
     alignItems: 'center',
     justifyContent: 'center'
   }

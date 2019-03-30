@@ -3,6 +3,7 @@ import { View, Text, StyleSheet } from "react-native";
 import constants from '../constants';
 import ProfileRow from '../components/profile-row';
 import auth from './../api/auth';
+import StatusCard from '../components/status-card';
 
 class HomeScreen extends Component {
   constructor(props){
@@ -23,7 +24,11 @@ class HomeScreen extends Component {
   render(){
     return (
       <View style={styles.container}>
-        <ProfileRow profileName={this.state.profileName} />
+        <ProfileRow style={styles.profileRow} profileName={this.state.profileName} />
+        <View style={styles.statusRow}>
+          <StatusCard label="Expiring" value="0" size={0.47} />
+          <StatusCard label="Expired" value="0" size={0.47} />
+        </View>
       </View>
     ); 
   }
@@ -35,7 +40,13 @@ const styles = StyleSheet.create({
     backgroundColor: constants.APP_BACKGROUND_COLOR ,
     flex: 1,
     paddingHorizontal: 25,
-    // alignItems: 'center' 
+  },
+  profileRow: {
+    marginVertical: 50,
+  },
+  statusRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   }
 });
  

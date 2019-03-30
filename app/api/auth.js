@@ -22,7 +22,7 @@ let auth = {
       const data = doc.data();
       if(data){
         localstore.save('user', data);
-        localstore.save('first', true);
+        localstore.save('first', false);
       }
       return data;
     }).catch(function(error) {
@@ -42,7 +42,7 @@ let auth = {
   },
   first(){
     return localstore.get('first').then((x)=>{
-      return !!x;
+      return !x; 
     });
   },
 };
