@@ -18,9 +18,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     // backgroundColor: 'red',
     // padding: 10,
-    marginTop: ExpoConstants.statusBarHeight,
-    paddingBottom: ExpoConstants.statusBarHeight,
-    paddingTop: 40,
+    marginTop: ExpoConstants.statusBarHeight + 20, 
+    marginBottom: ExpoConstants.statusBarHeight,
+    // paddingTop: 40,
     alignItems: 'center',
   },
   profileName: {
