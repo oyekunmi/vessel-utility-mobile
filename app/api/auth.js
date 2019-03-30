@@ -30,8 +30,13 @@ let auth = {
       return false;
     });
   },
-  check(){ 
+  current(){
     return localstore.get('user').then((x)=>{
+      return x ? JSON.parse(x):null;
+    }); 
+  },
+  check(){ 
+    return this.current().then((x)=>{
       return !!x;
     }); 
   },
@@ -39,7 +44,7 @@ let auth = {
     return localstore.get('first').then((x)=>{
       return !!x;
     });
-  }
+  },
 };
 
 export default auth;
