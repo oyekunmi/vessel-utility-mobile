@@ -11,7 +11,7 @@ const StatusCard = (props) => {
       alignItems: 'center',
       justifyContent: 'space-evenly',
       backgroundColor: constants.PRIMARY_COLOR,
-      height: 140,
+      height: props.height,
       
     },
     text:{
