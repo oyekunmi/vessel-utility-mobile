@@ -5,6 +5,7 @@ import constants from './../constants';
 import WhiteButton from '../components/buttons/white-button';
 import TransparentButton from '../components/buttons/transparent-button';
 import auth from './../api/auth';
+import vesselAPI from '../api/vessel';
 
 const background = require("../../assets/landing-bg.png");
 const { width, height } = Dimensions.get("window");
@@ -25,7 +26,10 @@ class LandingScreen extends React.Component{
     let authenticated = await auth.check();
     
     if(firstTime) this.setState({show:true});
-    else if(authenticated) this.props.navigation.navigate('Home');
+    else if(authenticated){
+      // if(vesselAPI.empty) vesselAPI.fetch();
+      this.props.navigation.navigate('Home');
+    }
     else this.props.navigation.navigate('Login');
 
   }

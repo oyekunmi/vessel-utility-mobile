@@ -5,62 +5,106 @@ import ProfileRow from '../components/profile-row';
 import auth from './../api/auth';
 import StatusCard from '../components/status-card';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-// import { FlatList } from 'react-native-gesture-handler';
+import vesselAPI from '../api/vessel';
+import { SafeAreaView } from 'react-navigation';
+import { ScrollView } from 'react-native-gesture-handler';
+import certificateAPI from '../api/certificate';
+import CertificateTeaserCard from "./../components/certifitcate-teaser-card";
 
 class HomeScreen extends Component {
   constructor(props){
     super(props); 
     this.state = ({
-      profileName: ''
-    });
-  }
+      profileName: '',
+      addType: 'vessel',
+      addPage: 'AddVessel',
+      emptyCertificates: true,
+      expiringCertificates: [],
+    }); 
+  } 
 
   componentDidMount(){
     auth.current().then(x=>{
       this.setState({
         profileName: x.name
+      }); 
+    });
+    vesselAPI.fetch().then(x=>{
+      this.setState({
+        addType: vesselAPI.empty ? 'vessel': 'certificate',
+        addPage: vesselAPI.empty ? 'AddVessel': 'AddCertificate',
+        emptyCertificates: !vesselAPI.empty
       });
+    });
+    certificateAPI.fetch().then(x=>{
+      this.setState({
+        expiringCertificates: certificateAPI.certificates
+      })
     });
   }
 
   render(){
     return (
-      <View style={styles.container}>
-        <ProfileRow style={styles.profileRow} profileName={this.state.profileName} />
-        <View style={styles.statusRow}>
-          <StatusCard label="Expiring" value="0" size={0.47} />
-          <StatusCard label="Expired" value="0" size={0.47} />
+      <ScrollView style={styles.container}>
+        <View style={styles.containerContent}>
+          <ProfileRow style={styles.profileRow} profileName={this.state.profileName} />
+          {this.renderStatusRow()}
+          {this.renderAddCard()}
+          {this.renderExpiringCard()}
         </View>
-        <View style={styles.addCard}>
-          <Text style={styles.addCardTitle} >Create your first vessel to get started</Text>
-          <MaterialIcons style={styles.addCardIcon} name="add-circle" onPress={()=>{ alert("A")}} />
-        </View>
-        <View style={styles.expiring}>
-          <Text style={styles.expiringTitle}>EXPIRING CERTIFICATES</Text>
-          {/* <FlatList
-            data={[
-              {key: 'Devin'},{key: 'Devin'},{key: 'Devin'},{key: 'Devin'},
-              {key: 'Jackson'},{key: 'Devin'},{key: 'Devin'},{key: 'Devin'},
-              {key: 'James'},{key: 'Devin'},{key: 'Devin'},{key: 'Devin'},
-              {key: 'Joel'},{key: 'Devin'},{key: 'Devin'},{key: 'Devin'},
-              {key: 'John'},{key: 'Devin'},{key: 'Devin'},{key: 'Devin'},{key: 'Devin'},
-              {key: 'Jillian'},{key: 'Devin'},{key: 'Devin'},{key: 'Devin'},
-              {key: 'Jimmy'},{key: 'Devin'},{key: 'Devin'},{key: 'Devin'},{key: 'Devin'},
-              {key: 'Julie'},{key: 'Devin'},{key: 'Devin'},{key: 'Devin'},{key: 'Devin'},
-            ]}
-            renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
-          /> */}
-        </View>
-      </View>
+      </ScrollView>  
     ); 
   }
-}
 
+  renderStatusRow(){
+    return(
+      <View style={styles.statusRow}>
+        <StatusCard label="Expiring" value="0" size={0.47} />
+        <StatusCard label="Expired" value="0" size={0.47} />
+      </View>
+    );
+    
+  }
+
+  renderAddCard(){
+    return (
+      <View style={styles.addCard}>
+        <Text style={styles.addCardTitle} >Create your first {this.state.addType} to get started</Text>
+        <MaterialIcons 
+          style={styles.addCardIcon}
+          name="add-circle"
+          onPress={()=>{ this.props.navigation.navigate(this.state.addPage) }} />
+      </View>
+    );
+  }
+
+  renderExpiringCard(){ 
+    return (
+      <View style={styles.expiring}>
+        <Text style={styles.expiringTitle}>EXPIRING CERTIFICATES</Text>
+
+        {this.state.emptyCertificates && (
+          <FlatList
+            data={this.state.expiringCertificates}
+            renderItem={
+              ({item}) => 
+                <CertificateTeaserCard certificate={item} />
+            }
+            // renderItem={({item}) => <Text style={styles.expiringItemRow}>{item.name}</Text>}
+          />
+        )}
+      </View>
+    );
+  }
+}
+ 
 // const 
 const styles = StyleSheet.create({
-  container: { 
+  container:{
     backgroundColor: constants.APP_BACKGROUND_COLOR ,
     flex: 1,
+  },
+  containerContent: { 
     paddingHorizontal: 25,
   },
   profileRow: {
@@ -98,12 +142,19 @@ const styles = StyleSheet.create({
     flex: 0.2,
   },
   expiring: {
-    
+    flex: 1 
   },
   expiringTitle: {
     textTransform: 'uppercase',
     color: "#A39595",
     fontWeight: 'bold'
+  },
+  expiringItemRow: {
+    backgroundColor: '#FFFFFF',
+    paddingVertical: 20,
+    paddingHorizontal:5,
+    marginVertical: 5,
+    borderRadius: constants.APP_BORDER_RADIUS,
   }
 });
  
