@@ -5,7 +5,6 @@
     "privacy": "public",
     "sdkVersion": "32.0.0",
     "platforms": [
-      "ios",
       "android"
     ],
     "primaryColor": "#4684FE",
@@ -23,8 +22,10 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "supportsTablet": true
-    }
+    "android": {
+      "package": "com.oyekunmi.captain"
+    },
+    "description": "Track certificates on a vessel",
+    "githubUrl": "https://github.com/oyekunmi/vessel-utility-mobile"
   }
 }
