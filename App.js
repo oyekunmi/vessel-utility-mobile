@@ -9,11 +9,11 @@ import {
 } from "react-navigation"; 
 import { Ionicons, Feather, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 
-import LandingScreen from './app/views/landing';
-import LoginScreen from './app/views/login';
-import HomeScreen from './app/views/home';
-import CertificatesScreen from './app/views/certificates';
-import VesselsScreen from './app/views/vessels';
+import LandingScreen from './app/screens/landing';
+import LoginScreen from './app/screens/login';
+import HomeScreen from './app/screens/home';
+import CertificatesScreen from './app/screens/certificates';
+import VesselsScreen from './app/screens/vessels';
 import constants from './app/constants';
 
 StatusBar.setHidden(true)
