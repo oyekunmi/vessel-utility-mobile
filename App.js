@@ -15,12 +15,20 @@ import HomeScreen from './app/screens/home';
 import CertificatesScreen from './app/screens/certificates';
 import VesselsScreen from './app/screens/vessels';
 import constants from './app/constants';
+import EntryScreen from './app/screens/entry';
+import auth from './app/api/auth';
 
 StatusBar.setHidden(true)
+// auth.logout();
 
 const LandingStack = createStackNavigator(
-  { Landing: LandingScreen, Login: LoginScreen }, 
-  { headerMode: 'none'}
+  { 
+    Landing: LandingScreen,
+    Login: LoginScreen 
+  }, 
+  { 
+    headerMode: 'none'
+  }
 );
 const AppStack = createBottomTabNavigator(
   { 
@@ -68,13 +76,13 @@ const AppStack = createBottomTabNavigator(
 );
 const MainNavigator = createSwitchNavigator(
   { 
+      AuthLoading: EntryScreen,
       Landing: LandingStack,
       App: AppStack
-  },
-  {
-    // mode: 'modal',
-    // headerMode: 'none',
-  }
+    },
+    {
+      initialRouteName: 'AuthLoading',
+    }
 ); 
 
 const App = createAppContainer(MainNavigator);

@@ -17,36 +17,7 @@ class LandingScreen extends React.Component{
     title: 'Landing',
   };
 
-  state = {
-    show: false
-  };
-
-  async componentDidMount(){
-    let firstTime = await auth.first();
-    let authenticated = await auth.check();
-    
-    if(firstTime) this.setState({show:true});
-    else if(authenticated){
-      // if(vesselAPI.empty) vesselAPI.fetch();
-      this.props.navigation.navigate('Home');
-    }
-    else this.props.navigation.navigate('Login');
-
-  }
-
   render(){ 
-    return this.state.show ? this.renderPage() : this.renderLoading();
-  }
-
-  renderLoading(){
-    return (
-      <View style={styles.loading}>
-          <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  }
-
-  renderPage(){
     const {navigate} = this.props.navigation;
     return (
       <ImageBackground source={background} style={styles.landing} resizeMode="stretch"> 
@@ -81,11 +52,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     width: '70%'
-  },
-  loading:{
-    flex: 1, 
-    alignItems: 'center',
-    justifyContent: 'center'
   }
 });
 

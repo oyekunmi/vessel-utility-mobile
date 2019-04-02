@@ -45,6 +45,10 @@ let auth = {
       return !x; 
     });
   },
+  logout(){
+    // localstore.remove('first');
+    return localstore.remove('user');
+  }
 };
 
 export default auth;
