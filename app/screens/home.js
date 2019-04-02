@@ -106,6 +106,7 @@ const styles = StyleSheet.create({
   },
   containerContent: { 
     paddingHorizontal: 25,
+    paddingBottom: 20,
   },
   profileRow: {
     marginVertical: 50,
