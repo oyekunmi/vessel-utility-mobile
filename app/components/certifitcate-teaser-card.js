@@ -38,6 +38,7 @@ const styles = ({
   container:{
     flex: 1,
     backgroundColor: constants.APP_BACKGROUND_ALTERNATE_COLOR,
+    // backgroundColor: 'red',
     borderRadius: constants.APP_BORDER_RADIUS,
     marginTop: 10,
     elevation: 1,

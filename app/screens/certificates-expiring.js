@@ -1,26 +1,31 @@
 import React from 'react';
-import {Text, FlatList} from 'react-native';
+import {Text, FlatList, StyleSheet} from 'react-native';
 import certificateAPI from '../api/certificate';
 import CertificateTeaserCard from "./../components/certifitcate-teaser-card";
-import { ScrollView } from 'react-native-gesture-handler';
 
 class ExpiringCertificatesScreen extends React.Component {
 
   render(){
     let certs = certificateAPI.certificates;
-    // certs = certs.concat(certs.copyWithin(certs.length));
     return (
-      <ScrollView style={{flex: 1, paddingTop:20, paddingBottom: 80}}>
       <FlatList
+        contentContainerStyle={styles.contentContainer}
         data={certs}
         renderItem={
           ({item}) => 
             <CertificateTeaserCard certificate={item} />
         }
       />
-      </ScrollView>
     )
   }
 }
+
+const styles = StyleSheet.create({
+  contentContainer: {
+    paddingBottom: 20,
+    paddingTop: 10,
+    paddingHorizontal: 20,
+  }
+});
 
 export default ExpiringCertificatesScreen;
