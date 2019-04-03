@@ -1,10 +1,9 @@
 {
+  "packagerPort": 19001,
+  "packagerPid": 10272,
   "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 13472,
   "expoServerNgrokUrl": "https://en-2pv.oyekunmi.captain.exp.direct",
   "packagerNgrokUrl": "https://packager.en-2pv.oyekunmi.captain.exp.direct",
-  "ngrokPid": 14516,
-  "webpackServerPort": null
+  "ngrokPid": 19632
 }

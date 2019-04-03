@@ -12,7 +12,7 @@ class EntryScreen extends Component {
   _bootstrapAsync = async () => {
     let authenticated = await auth.check();
     if(authenticated) {
-      this.props.navigation.navigate('App');
+      this.props.navigation.navigate('Certificates');
       return;
     }
 
@@ -23,7 +23,7 @@ class EntryScreen extends Component {
     }
 
     this.props.navigation.navigate('Login');
-  };
+  }
   
   render() {
     return (

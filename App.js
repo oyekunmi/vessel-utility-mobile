@@ -6,6 +6,8 @@ import {
   createSwitchNavigator,
   createStackNavigator,
   createAppContainer,
+  createTabNavigator,
+  createMaterialTopTabNavigator,
 } from "react-navigation"; 
 import { Ionicons, Feather, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
 
@@ -17,6 +19,10 @@ import VesselsScreen from './app/screens/vessels';
 import constants from './app/constants';
 import EntryScreen from './app/screens/entry';
 import auth from './app/api/auth';
+import ExpiringCertificatesScreen from './app/screens/certificates-expiring';
+import ExpiredCertificatesScreen from './app/screens/certificates-expired';
+import HealthyCertificatesScreen from './app/screens/certificates-healthy';
+import HeaderComponent from './app/screens/certificates';
 
 StatusBar.setHidden(true)
 // auth.logout();
@@ -27,9 +33,74 @@ const LandingStack = createStackNavigator(
     Login: LoginScreen 
   }, 
   { 
-    headerMode: 'none'
+    // headerMode: 'none'
   }
 );
+
+
+
+const CertificatesTabs= createMaterialTopTabNavigator(
+  {
+    ExpiringCertificates: {
+      screen: ExpiringCertificatesScreen,
+      navigationOptions:{
+        tabBarLabel: "EXPIRING",
+        title: "Example",
+      }
+    },
+    ExpiredCertificates: {
+      screen: ExpiredCertificatesScreen,
+      navigationOptions:{
+        tabBarLabel: "EXPIRED",
+        title: "Expired",
+      }
+    },
+    HealthyCertificates: {
+      screen: HealthyCertificatesScreen,
+      navigationOptions:{
+        tabBarLabel: "HEALTHY",
+        title: "Healthy",
+      }
+    }
+  },
+  {
+    tabBarOptions: {
+      activeTintColor: constants.PRIMARY_COLOR,
+      inactiveTintColor: "#909090",
+      labelStyle:{
+        fontWeight: 'bold',
+      },
+      indicatorStyle: {
+        backgroundColor: constants.PRIMARY_COLOR,
+      },
+      style: {
+        backgroundColor: 'transparent',
+        borderBottomColor: '#DCDCDC',
+        borderStyle: 'solid',
+        borderBottomWidth: 1,
+        elevation: 0,
+      },
+    }
+  }
+);
+
+const CertificatesStack = createStackNavigator(
+  {
+    certificate: CertificatesTabs,
+  },
+  {
+    defaultNavigationOptions: {
+      headerTitle: <HeaderComponent />,
+      headerStyle: {
+        paddingTop: 60,
+        paddingBottom: 40,
+        elevation: 0,
+        // backgroundColor: 'red',
+      }
+    },
+  }
+);
+
 const AppStack = createBottomTabNavigator(
   { 
     Home: {
@@ -42,7 +113,7 @@ const AppStack = createBottomTabNavigator(
       }
     },
     Certificates: {
-      screen: CertificatesScreen,
+      screen: CertificatesStack,
       navigationOptions:{
         title: "Certificates", 
         tabBarIcon: ({ tintColor }) => (
@@ -62,27 +133,34 @@ const AppStack = createBottomTabNavigator(
   },
   {
     tabBarOptions: {
-      activeTintColor: constants.PRIMARY_COLOR,
-      inactiveTintColor: 'gray',
+      activeTintColor: '#FFFFFF',
+      inactiveTintColor: "#E0E0E0",
       labelStyle: {
-        fontSize: 14, 
+        fontSize: 12,
+        // color: "#FFFFFF",
+      },
+      tabStyle: {
+        width: 100,
       },
       style: {
-        backgroundColor: constants.APP_TAB_BACKGROUND_COLOR,
-        verticalPadding: 20
+        backgroundColor: constants.PRIMARY_COLOR,
+        paddingVertical: 10,
+        height: 70,
+
       },
-    },
+    }
   }
 );
+
 const MainNavigator = createSwitchNavigator(
   { 
-      AuthLoading: EntryScreen,
-      Landing: LandingStack,
-      App: AppStack
-    },
-    {
-      initialRouteName: 'AuthLoading',
-    }
+    AuthLoading: EntryScreen,
+    Landing: LandingStack,
+    App: AppStack
+  },
+  {
+    initialRouteName: 'AuthLoading',
+  }
 ); 
 
 const App = createAppContainer(MainNavigator);
