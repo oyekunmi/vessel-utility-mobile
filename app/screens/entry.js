@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import {StatusBar, ActivityIndicator, View, StyleSheet} from 'react-native';
 import auth from '../api/auth';
+import certificateAPI from '../api/certificate';
+import vesselAPI from '../api/vessel';
 
 class EntryScreen extends Component {
   constructor(props){
@@ -10,11 +12,24 @@ class EntryScreen extends Component {
 
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    let authenticated = await auth.check();
-    if(authenticated) {
-      this.props.navigation.navigate('Certificates');
-      return;
+
+    try{ 
+      let authenticated = await auth.check();
+      if(authenticated) {
+        Promise.all([
+          vesselAPI.fetch(),
+          certificateAPI.fetch(),
+        ]).then(()=>{
+          this.props.navigation.navigate('Home');
+        });
+        return;
+      }
+    }catch(ex){
+ 
+    }finally{
+
     }
+   
 
     let firstTime = await auth.first();
     if(firstTime) {

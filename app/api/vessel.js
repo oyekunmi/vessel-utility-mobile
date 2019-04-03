@@ -27,7 +27,6 @@ let vesselAPI = {
       data.key = x.id;
       return data;
     });
-    console.log(this.vessels);
     return this.vessels;
   }
 };

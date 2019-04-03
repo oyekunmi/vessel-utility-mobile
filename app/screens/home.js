@@ -16,10 +16,9 @@ class HomeScreen extends Component {
     super(props); 
     this.state = ({
       profileName: '',
-      addType: 'vessel',
-      addPage: 'AddVessel',
-      emptyCertificates: true,
-      expiringCertificates: [],
+      addType: vesselAPI.empty ? 'vessel': 'certificate',
+      addPage: vesselAPI.empty ? 'AddVessel': 'AddCertificate',
+      emptyCertificates: !vesselAPI.empty
     }); 
   } 
 
@@ -90,7 +89,6 @@ class HomeScreen extends Component {
               ({item}) => 
                 <CertificateTeaserCard certificate={item} />
             }
-            // renderItem={({item}) => <Text style={styles.expiringItemRow}>{item.name}</Text>}
           />
         )}
       </View>

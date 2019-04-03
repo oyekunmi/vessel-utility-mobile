@@ -27,7 +27,6 @@ let certificateAPI = {
       data.key = x.id;
       return data;
     });
-    console.log(this.certificates);
     return this.certificates;
   }
 };

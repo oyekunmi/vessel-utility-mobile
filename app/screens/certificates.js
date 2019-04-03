@@ -3,7 +3,7 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import constants from '../constants';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-const HeaderComponent = () => {
+const HeaderComponent = (props) => {
   return (
     <View style={styles.header}>
         <Text style={styles.headerText}>Certificates</Text>
