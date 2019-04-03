@@ -1,28 +1,23 @@
 import React from 'react';
 import {StatusBar} from 'react-native';
-
 import { 
   createBottomTabNavigator,
   createSwitchNavigator,
   createStackNavigator,
   createAppContainer,
-  createTabNavigator,
   createMaterialTopTabNavigator,
 } from "react-navigation"; 
-import { Ionicons, Feather, FontAwesome, MaterialCommunityIcons } from '@expo/vector-icons';
-
+import { Ionicons, Feather, FontAwesome } from '@expo/vector-icons';
 import LandingScreen from './app/screens/landing';
 import LoginScreen from './app/screens/login';
 import HomeScreen from './app/screens/home';
-import CertificatesScreen from './app/screens/certificates';
 import VesselsScreen from './app/screens/vessels';
 import constants from './app/constants';
 import EntryScreen from './app/screens/entry';
-import auth from './app/api/auth';
 import ExpiringCertificatesScreen from './app/screens/certificates-expiring';
 import ExpiredCertificatesScreen from './app/screens/certificates-expired';
 import HealthyCertificatesScreen from './app/screens/certificates-healthy';
-import HeaderComponent from './app/screens/certificates';
+import TabbedHeaderComponent from './app/components/tabbed-header';
 
 StatusBar.setHidden(true)
 // auth.logout();
@@ -36,8 +31,6 @@ const LandingStack = createStackNavigator(
     // headerMode: 'none'
   }
 );
-
-
 
 const CertificatesTabs= createMaterialTopTabNavigator(
   {
@@ -90,7 +83,7 @@ const CertificatesStack = createStackNavigator(
   },
   {
     defaultNavigationOptions: {
-      headerTitle: <HeaderComponent />,
+      headerTitle: <TabbedHeaderComponent />,
       headerStyle: {
         paddingTop: 60,
         paddingBottom: 40,

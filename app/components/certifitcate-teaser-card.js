@@ -1,17 +1,17 @@
 import React from 'react';
 import {View, Text} from 'react-native';
 import constants from '../constants';
-// import PropTypes from 'prop-types';
   
 const CertificateTeaserCard = (props) => {
-  const {name,dateOfIssue,dateOfExpiry} = props.certificate;
+  const {name,dateOfIssue,dateOfExpiry, } = props.certificate;
+  const{status} = props;
   return (
     <View style={[styles.container, props.style]}>
       <View style={styles.nameRow}>
         <Text style={styles.name}>{name}</Text>
-        <View style={styles.status}></View>
+        <View style={[styles.status, {backgroundColor: status}]}></View>
       </View>
-      <View style={styles.teaserRow}>
+      <View style={styles.teaserRow}> 
         <View style={styles.teaserItem}> 
           <Text>{dateOfExpiry}</Text>
           <Text style={styles.teaserItemLabel}>Date of Expiry</Text>
@@ -60,7 +60,6 @@ const styles = ({
   },
   status: {
     // flex: 1,
-    backgroundColor: 'yellow',
     width: 10,
     height: 10,
     borderRadius:5,

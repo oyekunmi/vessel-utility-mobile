@@ -2,6 +2,7 @@ import React from 'react';
 import {Text, FlatList, StyleSheet} from 'react-native';
 import certificateAPI from '../api/certificate';
 import CertificateTeaserCard from "./../components/certifitcate-teaser-card";
+import constants from '../constants';
 
 class ExpiringCertificatesScreen extends React.Component {
 
@@ -13,7 +14,7 @@ class ExpiringCertificatesScreen extends React.Component {
         data={certs}
         renderItem={
           ({item}) => 
-            <CertificateTeaserCard certificate={item} />
+            <CertificateTeaserCard status={constants.APP_EXPIRING_INDICATOR} certificate={item} />
         }
       />
     )
