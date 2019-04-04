@@ -3,11 +3,15 @@ import {Text, FlatList, StyleSheet} from 'react-native';
 import certificateAPI from '../api/certificate';
 import CertificateTeaserCard from "./../components/certifitcate-teaser-card";
 import constants from '../constants';
+import moment from 'moment';
 
 class ExpiringCertificatesScreen extends React.Component {
 
   render(){
-    let certs = certificateAPI.certificates;
+    let certs = certificateAPI.certificates.filter(c=>{
+      let diff =  moment(c.dateOfExpiry).diff(moment(), 'months');
+      return diff >= 0 && diff <= 3; 
+    });
     return (
       <FlatList
         contentContainerStyle={styles.contentContainer}

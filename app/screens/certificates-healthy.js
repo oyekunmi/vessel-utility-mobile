@@ -3,10 +3,14 @@ import {Text, FlatList, StyleSheet} from 'react-native';
 import certificateAPI from '../api/certificate';
 import CertificateTeaserCard from "./../components/certifitcate-teaser-card";
 import constants from '../constants';
+import moment from 'moment';
 
 class HealthyCertificatesScreen extends React.Component{
   render(){
-    let certs = certificateAPI.certificates;
+    const certs = certificateAPI.certificates.filter(c=>{
+      const three_months_time = moment().add(3, 'month')
+      return moment(c.dateOfExpiry).isAfter(three_months_time);
+    });
     return (
       <FlatList
         contentContainerStyle={styles.contentContainer}

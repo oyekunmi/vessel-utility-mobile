@@ -3,35 +3,19 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native';
 import constants from '../constants';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
-const HeaderComponent = (props) => {
+const TabbedHeaderComponent = (props) => {
   return (
     <View style={styles.header}>
         <Text style={styles.headerText}>Certificates</Text>
         <MaterialIcons 
           style={styles.addCardIcon}
           name="add-circle"
-          onPress={()=>{ this.props.navigation.navigate(this.state.addPage) }} />
+          onPress={props.handleAddAction} />
       </View>
   );
 };
 
-const CertificatesScreen = () => {
-  return(
-    <ScrollView style={styles.container}>
-      
-    </ScrollView>
-  );
-}
-
 const styles = StyleSheet.create({
-  container:{
-    // backgroundColor: constants.APP_BACKGROUND_COLOR ,
-    flex: 1,
-    paddingHorizontal: 25,
-    paddingBottom: 20,
-  },
-  containerContent: { 
-  },
   header: {
     flex: 1,
     flexDirection: 'row',
@@ -51,4 +35,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HeaderComponent;
+export default TabbedHeaderComponent;
