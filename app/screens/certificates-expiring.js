@@ -9,8 +9,9 @@ class ExpiringCertificatesScreen extends React.Component {
 
   render(){
     let certs = certificateAPI.certificates.filter(c=>{
-      let diff =  moment(c.dateOfExpiry).diff(moment(), 'months');
-      return diff >= 0 && diff <= 3; 
+      let diffMonth =  moment(c.dateOfExpiry).diff(moment(), 'months');
+      let diffDay =  moment(c.dateOfExpiry).diff(moment(), 'days');
+      return (diffMonth >= 0 && diffMonth <= 3) && (diffDay > 0); 
     });
     return (
       <FlatList
