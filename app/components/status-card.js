@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet,TouchableOpacity } from 'react-native';
 import constants from '../constants';
 
 const StatusCard = (props) => {
@@ -26,11 +26,11 @@ const StatusCard = (props) => {
     }
   });
 
-  return (
-    <View style={styles.container}>
+  return ( 
+    <TouchableOpacity onPress={props.onPress} style={styles.container} activeOpacity={0.8}>
       <Text style={styles.textValue}>{props.value}</Text>
       <Text style={styles.text}>{props.label}</Text>
-    </View>
+    </TouchableOpacity>
   );
 };
  

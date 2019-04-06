@@ -56,10 +56,11 @@ class HomeScreen extends Component {
   renderStatusRow(){
     const expiringLength = this.state.expiringCertificates ? this.state.expiringCertificates.length:0;
     const expiredLength = this.state.expiredCertificates ? this.state.expiredCertificates.length:0;
+    const nav = this.props.navigation;
     return(
       <View style={styles.statusRow}>
-        <StatusCard label="Expiring" value={expiringLength} size={0.47} />
-        <StatusCard label="Expired" value={expiredLength} size={0.47} />
+        <StatusCard onPress={() => nav.navigate('ExpiringCertificates')} label="Expiring" value={expiringLength} size={0.47} />
+        <StatusCard onPress={() => nav.navigate('ExpiredCertificates')} label="Expired" value={expiredLength} size={0.47} />
       </View>
     );
   }
@@ -67,7 +68,20 @@ class HomeScreen extends Component {
   renderAddCard(){
     return (
       <View style={styles.addCard}>
-        <Text style={styles.addCardTitle} >Add more {this.state.addType} to get started and see more</Text>
+        
+        
+        {
+          !(this.state.emptyCertificates) &&  <Text style={styles.addCardTitle} >
+          Add more {this.state.addType} to see more functions
+          </Text>
+        }
+       
+        { 
+          (this.state.emptyCertificates) && <Text style={styles.addCardTitle} >
+          Create your first {this.state.addType} to get started
+        </Text>
+        }
+
         <MaterialIcons 
           style={styles.addCardIcon}
           name="add-circle"
