@@ -6,10 +6,9 @@ import auth from './../api/auth';
 import StatusCard from '../components/status-card';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import vesselAPI from '../api/vessel';
-import { SafeAreaView } from 'react-navigation';
 import { ScrollView } from 'react-native-gesture-handler';
-import certificateAPI from '../api/certificate';
 import CertificateTeaserCard from "./../components/certifitcate-teaser-card";
+import CertificatesService from '../services/certificates';
 
 class HomeScreen extends Component {
   constructor(props){
@@ -35,11 +34,10 @@ class HomeScreen extends Component {
         emptyCertificates: !vesselAPI.empty
       });
     });
-    certificateAPI.fetch().then(x=>{
-      this.setState({
-        expiringCertificates: certificateAPI.certificates
-      })
-    });
+    this.setState({
+      expiringCertificates: CertificatesService.getExpiringCertificates(),
+      expiredCertificates: CertificatesService.getExpiringCertificates(),
+    })
   }
 
   render(){
@@ -56,19 +54,20 @@ class HomeScreen extends Component {
   }
 
   renderStatusRow(){
+    const expiringLength = this.state.expiringCertificates ? this.state.expiringCertificates.length:0;
+    const expiredLength = this.state.expiredCertificates ? this.state.expiredCertificates.length:0;
     return(
       <View style={styles.statusRow}>
-        <StatusCard label="Expiring" value="0" size={0.47} />
-        <StatusCard label="Expired" value="0" size={0.47} />
+        <StatusCard label="Expiring" value={expiringLength} size={0.47} />
+        <StatusCard label="Expired" value={expiredLength} size={0.47} />
       </View>
     );
-    
   }
 
   renderAddCard(){
     return (
       <View style={styles.addCard}>
-        <Text style={styles.addCardTitle} >Create your first {this.state.addType} to get started</Text>
+        <Text style={styles.addCardTitle} >Add more {this.state.addType} to get started and see more</Text>
         <MaterialIcons 
           style={styles.addCardIcon}
           name="add-circle"

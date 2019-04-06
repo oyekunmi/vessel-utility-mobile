@@ -1,16 +1,13 @@
 import React from 'react';
 import {FlatList, StyleSheet} from 'react-native';
-import certificateAPI from '../api/certificate';
 import CertificateTeaserCard from "./../components/certifitcate-teaser-card";
 import constants from '../constants';
-import moment from 'moment';
+import CertificatesService from '../services/certificates';
 
 class ExpiredCertificatesScreen extends React.Component {
   
   render(){
-    const certs = certificateAPI.certificates.filter(c=>{
-      return moment(c.dateOfExpiry).isBefore(moment().subtract(1,'days'));
-    });
+    const certs = CertificatesService.getExpiredCertificates();
     return (
       <FlatList
         contentContainerStyle={styles.contentContainer}
