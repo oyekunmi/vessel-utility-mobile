@@ -11,15 +11,17 @@ import CertificateTeaserCard from "./../components/certifitcate-teaser-card";
 import CertificatesService from '../services/certificates';
 
 class HomeScreen extends Component {
+
   constructor(props){
     super(props); 
     this.state = ({
       profileName: '',
       addType: vesselAPI.empty ? 'vessel': 'certificate',
       addPage: vesselAPI.empty ? 'AddVessel': 'AddCertificate',
-      emptyCertificates: !vesselAPI.empty
+      emptyCertificates: !vesselAPI.empty,
+      emptyVessel: false
     }); 
-  } 
+  }
 
   componentDidMount(){
     auth.current().then(x=>{
@@ -31,13 +33,13 @@ class HomeScreen extends Component {
       this.setState({
         addType: vesselAPI.empty ? 'vessel': 'certificate',
         addPage: vesselAPI.empty ? 'AddVessel': 'AddCertificate',
-        emptyCertificates: !vesselAPI.empty
+        emptyVessel: vesselAPI.empty
       });
     });
     this.setState({
       expiringCertificates: CertificatesService.getExpiringCertificates(),
-      expiredCertificates: CertificatesService.getExpiringCertificates(),
-    })
+      expiredCertificates: CertificatesService.getExpiredCertificates(),
+    });
   }
 
   render(){
@@ -49,13 +51,14 @@ class HomeScreen extends Component {
           {this.renderAddCard()}
           {this.renderExpiringCard()}
         </View>
-      </ScrollView>  
+      </ScrollView>
     ); 
   }
 
   renderStatusRow(){
     const expiringLength = this.state.expiringCertificates ? this.state.expiringCertificates.length:0;
     const expiredLength = this.state.expiredCertificates ? this.state.expiredCertificates.length:0;
+    console.log(expiredLength);
     const nav = this.props.navigation;
     return(
       <View style={styles.statusRow}>
@@ -69,17 +72,22 @@ class HomeScreen extends Component {
     return (
       <View style={styles.addCard}>
         
-        
         {
-          !(this.state.emptyCertificates) &&  <Text style={styles.addCardTitle} >
-          Add more {this.state.addType} to see more functions
-          </Text>
+          !this.state.emptyVessel &&  
+          (
+          <Text style={styles.addCardTitle} >
+            Add more {this.state.addType} to see more functions
+            </Text>
+          )
         }
        
         { 
-          (this.state.emptyCertificates) && <Text style={styles.addCardTitle} >
-          Create your first {this.state.addType} to get started
-        </Text>
+          this.state.emptyVessel && 
+          (
+          <Text style={styles.addCardTitle} >
+            Create your first {this.state.addType} to get started
+          </Text>
+          )
         }
 
         <MaterialIcons 
@@ -107,6 +115,7 @@ class HomeScreen extends Component {
       </View>
     );
   }
+
 }
  
 // const 
