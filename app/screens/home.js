@@ -71,13 +71,12 @@ class HomeScreen extends Component {
   renderAddCard(){
     return (
       <View style={styles.addCard}>
-        
         {
           !this.state.emptyVessel &&  
           (
           <Text style={styles.addCardTitle} >
             Add more {this.state.addType} to see more functions
-            </Text>
+          </Text>
           )
         }
        

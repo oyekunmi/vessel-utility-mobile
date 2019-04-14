@@ -18,6 +18,10 @@ import ExpiringCertificatesScreen from './app/screens/certificates-expiring';
 import ExpiredCertificatesScreen from './app/screens/certificates-expired';
 import HealthyCertificatesScreen from './app/screens/certificates-healthy';
 import TabbedHeaderComponent from './app/components/tabbed-header';
+import AddCertificateScreen from "./app/screens/add-certificates";
+import AddCertificateNextScreen from "./app/screens/add-certificates-next";
+import AddCertificateReviewScreen from "./app/screens/add-certificates-review";
+
 
 StatusBar.setHidden(true)
 // auth.logout();
@@ -28,7 +32,7 @@ const LandingStack = createStackNavigator(
     Login: LoginScreen 
   }, 
   { 
-    // headerMode: 'none'
+    headerMode: 'none'
   }
 );
 
@@ -94,7 +98,17 @@ const CertificatesStack = createStackNavigator(
   }
 );
 
-const AppStack = createBottomTabNavigator(
+const AddCertificatesStack = createStackNavigator(
+{
+  AddCertificate: AddCertificateScreen,
+  AddCertificateNext: AddCertificateNextScreen,
+  AddCertificateReview: AddCertificateReviewScreen
+},
+{ 
+  headerMode: 'none'
+});
+
+const MainAppStack = createBottomTabNavigator(
   { 
     Home: {
       screen: HomeScreen,
@@ -114,15 +128,15 @@ const AppStack = createBottomTabNavigator(
         )
       }
     },
-    Vessels:{
-      screen: VesselsScreen,
-      navigationOptions:{
-        title: "Vessels",
-        tabBarIcon: ({ tintColor }) => (
-          <Ionicons name="md-boat" size={24} color={tintColor} />
-        )
-      }
-    }
+    // Vessels:{
+    //   screen: VesselsScreen,
+    //   navigationOptions:{
+    //     title: "Vessels",
+    //     tabBarIcon: ({ tintColor }) => (
+    //       <Ionicons name="md-boat" size={24} color={tintColor} />
+    //     )
+    //   }
+    // }
   },
   {
     tabBarOptions: {
@@ -142,8 +156,16 @@ const AppStack = createBottomTabNavigator(
 
       },
     }
-  }
+  } 
 );
+
+const AppStack = createStackNavigator({
+  AddCertificate: AddCertificatesStack,
+  MainApp: MainAppStack,
+},
+{ 
+  headerMode: 'none'
+});
 
 const MainNavigator = createSwitchNavigator(
   { 
