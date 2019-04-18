@@ -6,7 +6,7 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 const TabbedHeaderComponent = (props) => {
   return (
     <View style={styles.header}>
-        <Text style={styles.headerText}>Certificates</Text>
+        <Text style={styles.headerText}>{props.title}</Text>
         <MaterialIcons 
           style={styles.addCardIcon}
           name="add-circle"

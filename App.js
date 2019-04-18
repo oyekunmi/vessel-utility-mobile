@@ -87,7 +87,7 @@ const CertificatesStack = createStackNavigator(
   },
   {
     defaultNavigationOptions: {
-      headerTitle: <TabbedHeaderComponent />,
+      headerTitle: <TabbedHeaderComponent title="Certificates" />,
       headerStyle: {
         paddingTop: 60,
         paddingBottom: 40,
@@ -160,11 +160,11 @@ const MainAppStack = createBottomTabNavigator(
 );
 
 const AppStack = createStackNavigator({
-  AddCertificate: AddCertificatesStack,
   MainApp: MainAppStack,
+  AddCertificate: AddCertificatesStack,
 },
-{ 
-  headerMode: 'none'
+{  
+  // headerMode: 'none'
 });
 
 const MainNavigator = createSwitchNavigator(
