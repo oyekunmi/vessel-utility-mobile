@@ -1,5 +1,5 @@
 import React from 'react';
-import {StatusBar} from 'react-native';
+import {StatusBar, Button, View} from 'react-native';
 import { 
   createBottomTabNavigator,
   createSwitchNavigator,
@@ -17,10 +17,10 @@ import EntryScreen from './app/screens/entry';
 import ExpiringCertificatesScreen from './app/screens/certificates-expiring';
 import ExpiredCertificatesScreen from './app/screens/certificates-expired';
 import HealthyCertificatesScreen from './app/screens/certificates-healthy';
-import TabbedHeaderComponent from './app/components/tabbed-header';
 import AddCertificateScreen from "./app/screens/add-certificates";
 import AddCertificateNextScreen from "./app/screens/add-certificates-next";
 import AddCertificateReviewScreen from "./app/screens/add-certificates-review";
+import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 
 
 StatusBar.setHidden(true)
@@ -32,7 +32,7 @@ const LandingStack = createStackNavigator(
     Login: LoginScreen 
   }, 
   { 
-    headerMode: 'none'
+    headerMode: 'none' 
   }
 );
 
@@ -82,19 +82,38 @@ const CertificatesTabs= createMaterialTopTabNavigator(
 );
 
 const CertificatesStack = createStackNavigator(
-  {
+  { 
     certificate: CertificatesTabs,
   },
   {
     defaultNavigationOptions: {
-      headerTitle: <TabbedHeaderComponent title="Certificates" />,
+      title: "Certificates",
+      headerRight: (
+          <MaterialIcons
+            onPress={() => alert('This is a button!')}
+            name="add-circle"
+            color={constants.PRIMARY_COLOR}
+            size={28}
+          />
+      ),
+      headerRightContainerStyle: {
+        paddingHorizontal: 25
+      },
+      headerTitleContainerStyle: {
+        paddingHorizontal: 25,
+      },
+      headerTintColor: '#909090',
       headerStyle: {
-        paddingTop: 60,
-        paddingBottom: 40,
+        height: 100,
         elevation: 0,
-        // backgroundColor: 'red',
-      }
+      },
+      headerTitleStyle: {
+        fontSize: 24,
+        fontWeight: 'bold',
+      },
     },
+    navigationOptions: {
+    }
   }
 );
 
@@ -105,7 +124,7 @@ const AddCertificatesStack = createStackNavigator(
   AddCertificateReview: AddCertificateReviewScreen
 },
 { 
-  headerMode: 'none'
+  // headerMode: 'none'
 });
 
 const MainAppStack = createBottomTabNavigator(
@@ -164,7 +183,7 @@ const AppStack = createStackNavigator({
   AddCertificate: AddCertificatesStack,
 },
 {  
-  // headerMode: 'none'
+  headerMode: 'none'
 });
 
 const MainNavigator = createSwitchNavigator(
