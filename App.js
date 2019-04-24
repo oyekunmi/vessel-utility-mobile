@@ -7,11 +7,10 @@ import {
   createAppContainer,
   createMaterialTopTabNavigator,
 } from "react-navigation"; 
-import { Ionicons, Feather, FontAwesome } from '@expo/vector-icons';
+import { Feather, FontAwesome } from '@expo/vector-icons';
 import LandingScreen from './app/screens/landing';
 import LoginScreen from './app/screens/login';
 import HomeScreen from './app/screens/home';
-import VesselsScreen from './app/screens/vessels';
 import constants from './app/constants';
 import EntryScreen from './app/screens/entry';
 import ExpiringCertificatesScreen from './app/screens/certificates-expiring';
@@ -21,7 +20,6 @@ import AddCertificateScreen from "./app/screens/add-certificates";
 import AddCertificateNextScreen from "./app/screens/add-certificates-next";
 import AddCertificateReviewScreen from "./app/screens/add-certificates-review";
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-
 
 StatusBar.setHidden(true)
 // auth.logout();

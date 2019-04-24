@@ -3,7 +3,7 @@ import {View, Text} from 'react-native';
 import constants from '../constants';
   
 const CertificateTeaserCard = (props) => {
-  const {name,dateOfIssue,dateOfExpiry, } = props.certificate;
+  const {name,dateOfIssue,dateOfExpiry, nextAnnual} = props.certificate;
   const{status} = props;
   return (
     <View style={[styles.container, props.style]}>
@@ -13,16 +13,16 @@ const CertificateTeaserCard = (props) => {
       </View>
       <View style={styles.teaserRow}> 
         <View style={styles.teaserItem}> 
-          <Text>{dateOfExpiry}</Text>
-          <Text style={styles.teaserItemLabel}>Date of Expiry</Text>
+          <Text>{dateOfIssue}</Text>
+          <Text style={styles.teaserItemLabel}>Date of Issue</Text>
         </View>
         <View style={[styles.teaserItem, styles.teaserItemMiddle]}>
           <Text>{dateOfExpiry}</Text>
-          <Text style={styles.teaserItemLabel}>Next Annual</Text>
+          <Text style={styles.teaserItemLabel}>Date of Expiry</Text>
         </View>
         <View style={[styles.teaserItem, styles.teaserItemLast]}>
-          <Text>{5} Years</Text>
-          <Text style={styles.teaserItemLabel}>Duration</Text>
+          <Text>{nextAnnual}</Text>
+          <Text style={styles.teaserItemLabel}>Next Renewal</Text>
         </View> 
       </View>
     </View>

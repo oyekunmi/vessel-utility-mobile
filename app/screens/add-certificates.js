@@ -12,10 +12,11 @@ class AddCertificateScreen extends React.Component {
   render() {
 
     return (
+
       <ScrollView style={styles.container}>
         <View style={styles.header}></View>
         <View style={styles.fieldContainer}>
-          <Text>Vessel</Text>
+          <Text style={styles.fieldText}>Choose a Vessel</Text>
           <Picker
             selectedValue={this.state.vessel}
             style={styles.picker}
@@ -46,6 +47,7 @@ class AddCertificateScreen extends React.Component {
         </View>
       
       </ScrollView>
+    
     );
 
   }
@@ -56,7 +58,8 @@ const styles = StyleSheet.create({
   container: {
     backgroundColor: '#9FC0FF',
     color: '#FFFFFF',
-    flex: 1
+    flex: 1,
+    padding: 25,
   },
   header: {
     flex: 0.2
@@ -64,6 +67,9 @@ const styles = StyleSheet.create({
   fieldContainer: {
     flex: 0.8,
     backgroundColor: 'red',
+  },
+  fieldText: {
+    color: "#FFF",
   },
   picker: {
     width: 100
