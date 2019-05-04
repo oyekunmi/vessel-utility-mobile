@@ -18,7 +18,7 @@ class EntryScreen extends Component {
       if(authenticated) {
         Promise.all([
           vesselAPI.fetch(),
-          certificateAPI.fetch(),
+          certificateAPI.fetch('healthy'),
         ]).then(()=>{
           this.props.navigation.navigate('Home');
         });

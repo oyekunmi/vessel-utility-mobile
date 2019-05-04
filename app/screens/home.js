@@ -23,7 +23,7 @@ class HomeScreen extends Component {
     }); 
   }
 
-  componentDidMount(){
+  async componentDidMount(){
     auth.current().then(x=>{
       this.setState({
         profileName: x.name
@@ -37,8 +37,8 @@ class HomeScreen extends Component {
       });
     });
     this.setState({
-      expiringCertificates: CertificatesService.getExpiringCertificates(),
-      expiredCertificates: CertificatesService.getExpiredCertificates(),
+      expiringCertificates: await CertificatesService.getExpiringCertificates(),
+      expiredCertificates: await CertificatesService.getExpiredCertificates(),
     });
   }
 
@@ -58,7 +58,6 @@ class HomeScreen extends Component {
   renderStatusRow(){
     const expiringLength = this.state.expiringCertificates ? this.state.expiringCertificates.length:0;
     const expiredLength = this.state.expiredCertificates ? this.state.expiredCertificates.length:0;
-    console.log(expiredLength);
     const nav = this.props.navigation;
     return(
       <View style={styles.statusRow}>

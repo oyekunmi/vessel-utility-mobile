@@ -3,23 +3,20 @@ import moment from 'moment';
 
 const CertificatesService = {
   getExpiringCertificates() {
-    return certificateAPI.certificates.filter(c=>{
-      const diffMonth =  moment(c.dateOfExpiry).diff(moment(), 'months');
-      const diffDay =  moment(c.dateOfExpiry).diff(moment(), 'days');
-      return (diffMonth >= 0 && diffMonth < 3) && (diffDay > 0); 
-    });
+     certificateAPI.fetch('expiring').then(processData); 
   },
   getExpiredCertificates(){
-    return certificateAPI.certificates.filter(c=>{
-      return moment(c.dateOfExpiry).isBefore(moment().subtract(1,'days'));
-    });
+    return certificateAPI.fetch('expired').then(processData); 
   },
   getHealthyCertificates(){
-    const three_months_time = moment().add(3, 'months');
-    return certificateAPI.certificates.filter(c=>{
-      return moment(c.dateOfExpiry).isAfter(three_months_time);
-    });
+    return certificateAPI.fetch('healthy').then(processData); 
   } 
 };
 
+function processData(data){
+  return data.map(x=>{
+      x.key = x.id.toString();
+      return x;
+    });
+}
 export default CertificatesService;

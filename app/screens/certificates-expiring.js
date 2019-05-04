@@ -3,22 +3,43 @@ import {FlatList, StyleSheet} from 'react-native';
 import CertificateTeaserCard from "./../components/certifitcate-teaser-card";
 import constants from '../constants';
 import CertificatesService from '../services/certificates';
+import { ActivityIndicator } from 'react-native-paper';
 
 class ExpiringCertificatesScreen extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      certificates: [],
+      loaded: false
+    }
+
+  }
+  async componentDidMount(){
+    const certs = await CertificatesService.getExpiringCertificates();
+    this.setState({
+      certificates: certs,
+      loaded: true
+    })
+  }
 
   render(){
-    const certs = CertificatesService.getExpiringCertificates();
+    if(!this.state.loaded){
+      return (
+       <ActivityIndicator size="large" style={{flex:1}} />
+      )
+    }
     return (
       <FlatList
         contentContainerStyle={styles.contentContainer}
-        data={certs}
+        data={this.state.certificates}
         renderItem={
-          ({item}) => 
+          (item) => 
             <CertificateTeaserCard status={constants.APP_EXPIRING_INDICATOR} certificate={item} />
         }
       />
     )
   }
+
 }
 
 const styles = StyleSheet.create({
