@@ -9,6 +9,7 @@ import vesselAPI from '../api/vessel';
 import { ScrollView } from 'react-native-gesture-handler';
 import CertificateTeaserCard from "./../components/certifitcate-teaser-card";
 import CertificatesService from '../services/certificates';
+import VesselService from '../services/vessels';
 
 class HomeScreen extends Component {
 
@@ -19,7 +20,9 @@ class HomeScreen extends Component {
       addType: vesselAPI.empty ? 'vessel': 'certificate',
       addPage: vesselAPI.empty ? 'AddVessel': 'AddCertificate',
       emptyCertificates: !vesselAPI.empty,
-      emptyVessel: false
+      emptyVessel: true,
+      vessels: [],
+      previewCertificates: [],
     }); 
   }
 
@@ -29,16 +32,20 @@ class HomeScreen extends Component {
         profileName: x.name
       }); 
     });
-    vesselAPI.fetch().then(x=>{
-      this.setState({
-        addType: vesselAPI.empty ? 'vessel': 'certificate',
-        addPage: vesselAPI.empty ? 'AddVessel': 'AddCertificate',
-        emptyVessel: vesselAPI.empty
-      });
-    });
+    
+    const vessels = await VesselService.all();
+    const emptyVessels = vessels.length === 0;
+    const expiringCerts = await CertificatesService.getExpiringCertificates();
+    const expiredCerts = await CertificatesService.getExpiredCertificates();
+    const combined = expiredCerts.concat(expiringCerts);
     this.setState({
-      expiringCertificates: await CertificatesService.getExpiringCertificates(),
-      expiredCertificates: await CertificatesService.getExpiredCertificates(),
+      vessels: vessels,
+      emptyVessel: emptyVessels,
+      addType: emptyVessels ? 'vessel': 'certificate',
+      addPage: emptyVessels ? 'AddVessel': 'AddCertificate',
+      expiringCertificates: expiringCerts,
+      expiredCertificates: expiredCerts,
+      previewCertificates: combined
     });
   }
 
@@ -99,13 +106,13 @@ class HomeScreen extends Component {
   renderExpiringCard(){ 
     return (
       <View style={styles.expiring}>
-        <Text style={styles.expiringTitle}>EXPIRING CERTIFICATES</Text>
+        <Text style={styles.expiringTitle}>PREVIEW CERTIFICATES</Text>
 
-        {this.state.emptyCertificates && (
+        {!this.state.emptyVessel && (
           <FlatList
-            data={this.state.expiringCertificates}
+            data={this.state.previewCertificates}
             renderItem={
-              ({item}) => 
+              (item) => 
                 <CertificateTeaserCard certificate={item} />
             }
           />

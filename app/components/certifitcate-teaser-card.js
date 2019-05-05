@@ -3,10 +3,13 @@ import {View, Text} from 'react-native';
 import constants from '../constants';
   
 const CertificateTeaserCard = (props) => {
-  const {name,issue,expiry, renewals} = props.certificate.item;
+  const {name,issue,expiry, renewals, vessel_name} = props.certificate.item;
   const{status} = props;
   return (
     <View style={[styles.container, props.style]}>
+      <View style={styles.headerRow}>
+        <Text style={styles.header}>{vessel_name}</Text>
+      </View>
       <View style={styles.nameRow}>
         <Text style={styles.name}>{name}</Text>
         <View style={[styles.status, {backgroundColor: status}]}></View>
@@ -43,6 +46,22 @@ const styles = ({
     marginTop: 10,
     elevation: 1,
     borderColor: constants.APP_BACKGROUND_ALTERNATE_COLOR,
+  },
+  
+  headerRow:{
+    flex:1,
+    borderColor: constants.APP_BACKGROUND_COLOR,
+    backgroundColor: constants.PRIMARY_COLOR,
+    borderBottomWidth: 1,
+    padding: 10,
+    flexDirection:'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
+  header:{
+    color: "#fff",
+    fontSize: 14,
+    // flex:1,
   },
   nameRow:{
     flex:1,

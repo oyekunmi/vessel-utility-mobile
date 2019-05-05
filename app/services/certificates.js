@@ -1,9 +1,8 @@
 import certificateAPI from "../api/certificate";
-import moment from 'moment';
 
 const CertificatesService = {
   getExpiringCertificates() {
-     certificateAPI.fetch('expiring').then(processData); 
+     return certificateAPI.fetch('expiring').then(processData); 
   },
   getExpiredCertificates(){
     return certificateAPI.fetch('expired').then(processData); 

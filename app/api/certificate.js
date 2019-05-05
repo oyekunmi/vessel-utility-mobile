@@ -1,7 +1,3 @@
-
-import localstore from "./localstore";
-import moment from 'moment';
-
 let certificateAPI = {
   empty: true,
   certificates: [],
