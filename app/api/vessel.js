@@ -2,7 +2,7 @@ let vesselAPI = {
   empty: true,
   vessels: [],
   async fetch(state){
-    const response = await fetch(`http://captain.moovelogic.com/public/api/vessels`,{
+    const response = await fetch(`http://captain.moovelogic.com/api/vessels`,{
       headers: new Headers({
         'Authorization': "Bearer SHmkX",
       })

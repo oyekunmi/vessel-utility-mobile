@@ -2,7 +2,7 @@ let certificateAPI = {
   empty: true,
   certificates: [],
   async fetch(state){
-    const response = await fetch(`http://captain.moovelogic.com/public/api/certificates/${state}/state`,{
+    const response = await fetch(`http://captain.moovelogic.com/api/certificates/${state}/state`,{
       headers: new Headers({
         'Authorization': "Bearer SHmkX",
       })
