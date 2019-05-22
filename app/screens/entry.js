@@ -16,6 +16,7 @@ class EntryScreen extends Component {
     try{ 
       let authenticated = await auth.check();
       if(authenticated) {
+        console.log("here");
         Promise.all([
           vesselAPI.fetch(),
           certificateAPI.fetch('healthy'),

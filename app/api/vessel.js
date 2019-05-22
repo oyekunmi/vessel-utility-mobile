@@ -2,9 +2,9 @@ let vesselAPI = {
   empty: true,
   vessels: [],
   async fetch(state){
-    const response = await fetch(`http://captain.moovelogic.com/api/vessels`,{
+    const response = await fetch(`https://captain.moovelogic.com/api/vessels`,{
       headers: new Headers({
-        'Authorization': "Bearer SHmkX",
+        'Authorization': "Bearer modey",
       })
     })
     .then( (response)=>{
@@ -13,7 +13,9 @@ let vesselAPI = {
       }
       return response;
     })
-    return await response.json();
+    resp = await response.json();
+    console.log(resp);
+    return resp;
   }
 };
 
